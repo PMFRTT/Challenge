@@ -1,0 +1,13 @@
+name: Challenge
+version: ${project.version}
+main: challenge.ChallengeMain
+api-version: 1.13
+depend: [Core]
+commands:
+  timer:
+  reset:
+  settings:
+  backpack:
+    aliases: [bp]
+  randomtp:
+  record:
