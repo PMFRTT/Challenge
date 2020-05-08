@@ -28,6 +28,8 @@ import static challenge.ChallengeMain.*;
 
 public class ChallengeListener implements Listener {
 
+    private static double damageTaken= 0;
+
     ChallengeMain main;
 
     public ChallengeListener(ChallengeMain main) {
@@ -309,8 +311,7 @@ public class ChallengeListener implements Listener {
 
     @EventHandler
     private void showDamage(EntityDamageEvent e) {
-        double damageTakenDouble = (e.getDamage() / 2);
-        String damageTaken = damageTakenDouble + "❤";
+        String damageTaken = this.damageTaken + "❤";
         if (e.getEntity() instanceof Player) {
             Player player = (Player) e.getEntity();
             if (showDamage) {
@@ -447,10 +448,10 @@ public class ChallengeListener implements Listener {
 
     @EventHandler
     private void splitDamage(EntityDamageEvent e) {
+        damageTaken = e.getDamage();
         if (e.getEntity() instanceof Player) {
             if (!paused && started) {
                 if (isSplitHealth) {
-                    double damageTaken = e.getDamage();
                     splitHealth -= damageTaken;
                     if (splitHealth > 0) {
                         for (Player player : Bukkit.getOnlinePlayers()) {
