@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengeSettings {
@@ -38,14 +39,13 @@ public class ChallengeSettings {
     public static void displaySettingsInv() {
         inventorySelected = "Settings.Main";
         //Adds Items to Change Settings
-
-        addItem(Material.CHEST_MINECART, 1, "Backpack", 10, null, Settings, ChallengeMain.backpackEnabled);
-        addItem(Material.ENDER_PEARL, 1, "Zufälliger Teleport", 12, null, Settings, ChallengeMain.randomTeleportEnabled);
-        addItem(Material.SLIME_BALL, 1, "Force Block", 14, null, Settings, ChallengeMain.forceBlockEnabled);
-        addItem(Material.CLOCK, 1, "Zeige Rekord", 16, null, Settings, ChallengeMain.showRecord);
-        addItem(Material.GOLDEN_APPLE, 1, "Hardcore", 40, null, Settings, ChallengeMain.isHardcore);
-        addItem(Material.RED_MUSHROOM, 1, "Split-Herzen", 49, null, Settings, ChallengeMain.isSplitHealth);
-        addItem(Material.OAK_SIGN, 1, "Schadens-Anzeige", 31, null, Settings, ChallengeMain.showDamage);
+        addItem(Material.CHEST_MINECART, 1, "Backpack", 10, new ArrayList<String>() {{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fErmöglicht den Austausch von")); add(Utils.colorize("&fItem zwischen den Spielern!"));}}, Settings, ChallengeMain.backpackEnabled);
+        addItem(Material.ENDER_PEARL, 1, "Zufälliger Teleport", 12, new ArrayList<String>() {{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Spieler werden alle")); add(Utils.colorize("&f5 - 15 Minuten zu")); add(Utils.colorize("&fzufälligen Koordinaten teleportiert"));}}, Settings, ChallengeMain.randomTeleportEnabled);
+        addItem(Material.SLIME_BALL, 1, "Force Block", 14, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Spieler müssen alle"));add(Utils.colorize("&f5 - 15 Minuten auf einem")); add(Utils.colorize("&fzufälligen Block stehen!"));}}, Settings, ChallengeMain.forceBlockEnabled);
+        addItem(Material.CLOCK, 1, "Zeige Rekord", 16, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDer Rekord der Challenge"));add(Utils.colorize("&fwird in einer Leiste oben")); add(Utils.colorize("&fangezeigt!!"));}}, Settings, ChallengeMain.showRecord);
+        addItem(Material.GOLDEN_APPLE, 1, "Hardcore", 40, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Spieler haben"));add(Utils.colorize("&fkeine natürliche Regeneration!")); add(Utils.colorize("&fRegeneration ist aber durch andere"));add(Utils.colorize("&fMittel möglich!"));}}, Settings, ChallengeMain.isHardcore);
+        addItem(Material.RED_MUSHROOM, 1, "Split-Herzen", 49, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Herzen werden zwischen"));add(Utils.colorize("&fallen Spielern aufgeteilt!"));}}, Settings, ChallengeMain.isSplitHealth);
+        addItem(Material.OAK_SIGN, 1, "Schadens-Anzeige", 31, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fJeder Schaden, den ein Spieler"));add(Utils.colorize("&ferhält wird im Chat angezeigt!"));}}, Settings, ChallengeMain.showDamage);
 
 
         //Fills up empty slots
@@ -62,28 +62,22 @@ public class ChallengeSettings {
 
 
     public static void addItem(Material material, int count, String name, int slot, List<String> lore, Inventory inventory, boolean isEnabled) {
+        List<String> finalLore = new ArrayList<String>();
         ItemStack itemStack = new ItemStack(material, count);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(name);
-        if (lore != null) {
-            itemMeta.setLore(lore);
-        }
-        if (isEnabled) {
-            itemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-        itemStack.setItemMeta(itemMeta);
-        inventory.setItem(slot, itemStack);
-    }
+        itemMeta.setDisplayName(Utils.colorize("&f" + name));
 
-    public static void addItem(Material material, int count, String name, Boolean enchanted, int slot, List<String> lore, Inventory inventory) {
-        ItemStack itemStack = new ItemStack(material, count);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(name);
-        if (lore != null) {
-            itemMeta.setLore(lore);
+
+        if (isEnabled) {
+            finalLore.add(Utils.colorize("&aAktiviert"));
+        } else {
+            finalLore.add(Utils.colorize("&cDeaktiviert"));
         }
-        if (enchanted) {
+
+        finalLore.addAll(lore);
+        itemMeta.setLore(finalLore);
+
+        if (isEnabled) {
             itemMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }

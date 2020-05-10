@@ -22,6 +22,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,7 +30,7 @@ import static challenge.ChallengeMain.*;
 
 public class ChallengeListener implements Listener {
 
-    private static double damageTaken= 0;
+    private static double damageTaken = 0;
 
     ChallengeMain main;
 
@@ -220,7 +221,7 @@ public class ChallengeListener implements Listener {
             startMeta.setDisplayName(Utils.colorize("&aStart"));
             start.setItemMeta(startMeta);
 
-            ItemStack particles =  new ItemStack(Material.GHAST_TEAR);
+            ItemStack particles = new ItemStack(Material.GHAST_TEAR);
             ItemMeta particlesMeta = particles.getItemMeta();
 
             particlesMeta.setDisplayName(Utils.colorize("&dPartikel"));
@@ -253,12 +254,12 @@ public class ChallengeListener implements Listener {
                     p.getInventory().clear();
                 }
             }
-            if(player.getItemInHand().getType().equals(Material.GHAST_TEAR)){
+            if (player.getItemInHand().getType().equals(Material.GHAST_TEAR)) {
                 e.setCancelled(true);
-                if(showParticles.get(player)){
+                if (showParticles.get(player)) {
                     showParticles.put(player, false);
                     player.sendMessage(Utils.getPrefix("Partikel") + Utils.colorize("Es werden nun keine &dPartikel &fmehr angezeigt!"));
-                }else{
+                } else {
                     showParticles.put(player, true);
                     player.sendMessage(Utils.getPrefix("Partikel") + Utils.colorize("Es werden nun &dPartikel&f angezeigt!"));
                 }
@@ -292,17 +293,16 @@ public class ChallengeListener implements Listener {
             e.setCancelled(true);
         } else {
 
-            if (!e.getCause().equals(EntityDamageEvent.DamageCause.CUSTOM)) {
-                if (e.getEntity() instanceof Player) {
-                    Player p = (Player) e.getEntity();
-                    if (!hasBeenTeleported.contains(p)) {
-                        if (p.getHealth() - e.getDamage() < .1) {
-                            e.setCancelled(true);
-                            ChallengeFailed(p);
-                        }
+            if (e.getEntity() instanceof Player) {
+                Player p = (Player) e.getEntity();
+                if (!hasBeenTeleported.contains(p)) {
+                    if (p.getHealth() - e.getDamage() < .1) {
+                        e.setCancelled(true);
+                        ChallengeFailed(p);
                     }
                 }
             }
+
             if (e.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
                 if (e.getEntity() instanceof Player) {
                     if (hasBeenTeleported.contains(e.getEntity())) {
@@ -459,6 +459,8 @@ public class ChallengeListener implements Listener {
                         case CONTACT:
                             sendColoredEntityString("&7", player, "KONTAKT", damageTaken, "einen");
                             break;
+                        default:
+                            sendColoredEntityString(null, player, "UNDEFINIERT", damageTaken, "einen");
 
                     }
 
@@ -510,7 +512,18 @@ public class ChallengeListener implements Listener {
     }
 
     private static void sendColoredEntityString(String colorCode, Player player, String entity, String damageTaken, String add) {
-        Utils.sendMessageToEveryone(Utils.getPrefix("Schaden") + Utils.colorize("&b" + player.getDisplayName() + "&f hat durch " + add + " " + colorCode + entity + "&f Schaden erhalten (&c" + damageTaken + "&f)"));
+        if (colorCode == null) {
+            Utils.sendMessageToEveryone(Utils.getPrefix("Schaden") + Utils.colorize("&b" + player.getDisplayName() + "&f hat durch " + add + " " + Utils.getRainbowString(entity) + "&f Schaden erhalten (&c" + damageTaken + "&f)"));
+        } else {
+            Utils.sendMessageToEveryone(Utils.getPrefix("Schaden") + Utils.colorize("&b" + player.getDisplayName() + "&f hat durch " + add + " " + colorCode + entity + "&f Schaden erhalten (&c" + damageTaken + "&f)"));
+        }
+    }
+
+    @EventHandler
+    private static void onSneak(PlayerToggleSneakEvent e) {
+        if (e.isSneaking()) {
+            e.getPlayer().damage(2);
+        }
     }
 
 
