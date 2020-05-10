@@ -2,6 +2,7 @@ package challenge;
 
 import core.CoreSendStringPacket;
 import core.Utils;
+import net.minecraft.server.v1_15_R1.ItemBoneMeal;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -198,6 +199,10 @@ public class ChallengeListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+
+        showParticles.put(e.getPlayer(), true);
+
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             recordTimeBar.addPlayer(player);
         }
@@ -214,9 +219,17 @@ public class ChallengeListener implements Listener {
 
             startMeta.setDisplayName(Utils.colorize("&aStart"));
             start.setItemMeta(startMeta);
+
+            ItemStack particles =  new ItemStack(Material.GHAST_TEAR);
+            ItemMeta particlesMeta = particles.getItemMeta();
+
+            particlesMeta.setDisplayName(Utils.colorize("&dPartikel"));
+            particles.setItemMeta(particlesMeta);
+
             e.getPlayer().getInventory().clear();
             e.getPlayer().getInventory().setItem(8, start);
             e.getPlayer().getInventory().setItem(4, settings);
+            e.getPlayer().getInventory().setItem(0, particles);
         }
     }
 
@@ -238,6 +251,16 @@ public class ChallengeListener implements Listener {
                     p.setGameMode(GameMode.SURVIVAL);
                     Utils.heal(p);
                     p.getInventory().clear();
+                }
+            }
+            if(player.getItemInHand().getType().equals(Material.GHAST_TEAR)){
+                e.setCancelled(true);
+                if(showParticles.get(player)){
+                    showParticles.put(player, false);
+                    player.sendMessage(Utils.getPrefix("Partikel") + Utils.colorize("Es werden nun keine &dPartikel &fmehr angezeigt!"));
+                }else{
+                    showParticles.put(player, true);
+                    player.sendMessage(Utils.getPrefix("Partikel") + Utils.colorize("Es werden nun &dPartikel&f angezeigt!"));
                 }
             }
         }

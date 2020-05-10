@@ -3,6 +3,7 @@ package challenge;
 import java.util.*;
 
 import core.CoreMain;
+import core.CoreResetServer;
 import core.CoreSendStringPacket;
 import core.Utils;
 import org.bukkit.*;
@@ -43,6 +44,8 @@ public class ChallengeMain extends JavaPlugin implements Listener {
     public static boolean forceBlockEnabled = false;
     public static boolean showRecord = false;
     public static boolean showDamage = false;
+
+    public static HashMap<Player, Boolean> showParticles = new HashMap<Player, Boolean>();
 
     public static BossBar recordTimeBar = Bukkit.createBossBar(Utils.colorize("Euer &bRekord &fist &b" + Utils.formatTimerTime(recordInSeconds)), BarColor.WHITE, BarStyle.SOLID);
 
@@ -167,19 +170,19 @@ public class ChallengeMain extends JavaPlugin implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                if(paused || !started)
-                for(Player player : Bukkit.getOnlinePlayers()){
-                   player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 100);
-                }
+                if (paused || !started)
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        if (showParticles.containsKey(player)) {
+                            if (showParticles.get(player)) {
+                                player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 100);
+                            }
+                        }
+                    }
             }
-        },0L, 1L);
-
+        }, 0L, 1L);
 
 
     }
-
-
-
 
 
     public void hasStarted() {
