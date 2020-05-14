@@ -151,13 +151,13 @@ public class ChallengeListener implements Listener {
                     }
                 }
 
-                if(e.getSlot() == 53){
-                    if(!showHealthScoreboard){
+                if (e.getSlot() == 53) {
+                    if (!showHealthScoreboard) {
                         showHealthScoreboard = true;
                         Utils.createHealthDisplay();
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Lebensanzeige", true);
-                    }else{
+                    } else {
                         showHealthScoreboard = false;
                         Utils.createHealthDisplay();
                         ChallengeSettings.displaySettingsInv();
