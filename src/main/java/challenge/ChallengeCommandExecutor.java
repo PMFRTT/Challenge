@@ -61,7 +61,6 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der aktuelle &bRekord&f liegt bei &b") + Utils.formatTimerTime(ChallengeMain.recordInSeconds));
                     p.setGameMode(GameMode.SURVIVAL);
                     Utils.heal(p);
-                    p.getInventory().clear();
                 }
                 return true;
             }

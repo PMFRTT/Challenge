@@ -44,6 +44,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
     public static boolean forceBlockEnabled = false;
     public static boolean showRecord = false;
     public static boolean showDamage = false;
+    public static boolean showHealthScoreboard = false;
 
     public static HashMap<Player, Boolean> showParticles = new HashMap<Player, Boolean>();
 

@@ -46,6 +46,7 @@ public class ChallengeSettings {
         addItem(Material.GOLDEN_APPLE, 1, "Hardcore", 40, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Spieler haben"));add(Utils.colorize("&fkeine natürliche Regeneration!")); add(Utils.colorize("&fRegeneration ist aber durch andere"));add(Utils.colorize("&fMittel möglich!"));}}, Settings, ChallengeMain.isHardcore);
         addItem(Material.RED_MUSHROOM, 1, "Split-Herzen", 49, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Herzen werden zwischen"));add(Utils.colorize("&fallen Spielern aufgeteilt!"));}}, Settings, ChallengeMain.isSplitHealth);
         addItem(Material.OAK_SIGN, 1, "Schadens-Anzeige", 31, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fJeder Schaden, den ein Spieler"));add(Utils.colorize("&ferhält wird im Chat angezeigt!"));}}, Settings, ChallengeMain.showDamage);
+        addItem(Material.PAPER, 1, "Lebens-Anzeige", 53, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDas Leben eines jeden Spielers"));add(Utils.colorize("&fwird in der Spieler-Liste angezeigt!"));}}, Settings, ChallengeMain.showHealthScoreboard);
 
 
         //Fills up empty slots
