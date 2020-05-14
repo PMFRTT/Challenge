@@ -114,12 +114,12 @@ public class ChallengeListener implements Listener {
                         isHardcore = true;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Hardcore", true);
-                        world.setGameRule(GameRule.NATURAL_REGENERATION, false);
+                        Utils.changeGamerule(GameRule.NATURAL_REGENERATION, false);
                     } else {
                         isHardcore = false;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Hardcore", false);
-                        world.setGameRule(GameRule.NATURAL_REGENERATION, true);
+                        Utils.changeGamerule(GameRule.NATURAL_REGENERATION, true);
                     }
                 }
 
@@ -148,6 +148,15 @@ public class ChallengeListener implements Listener {
                         showDamage = false;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Schadensanzeige", false);
+                    }
+                }
+
+                if(e.getSlot() == 53){
+                    if(!showHealthScoreboard){
+                        showHealthScoreboard = true;
+
+                    }else{
+
                     }
                 }
 
@@ -518,14 +527,6 @@ public class ChallengeListener implements Listener {
             Utils.sendMessageToEveryone(Utils.getPrefix("Schaden") + Utils.colorize("&b" + player.getDisplayName() + "&f hat durch " + add + " " + colorCode + entity + "&f Schaden erhalten (&c" + damageTaken + "&f)"));
         }
     }
-
-    @EventHandler
-    private static void onSneak(PlayerToggleSneakEvent e) {
-        if (e.isSneaking()) {
-            e.getPlayer().damage(2);
-        }
-    }
-
 
     private static void settingsChangeMessage(String setting, boolean active) {
 
