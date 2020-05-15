@@ -165,6 +165,18 @@ public class ChallengeListener implements Listener {
                     }
                 }
 
+                if(e.getSlot() == 28){
+                    if(!noJump){
+                        noJump = true;
+                        ChallengeSettings.displaySettingsInv();
+                        settingsChangeMessage("Lebensanzeige", true);
+                    }else{
+                        noJump = false;
+                        ChallengeSettings.displaySettingsInv();
+                        settingsChangeMessage("Lebensanzeige", false);
+                    }
+                }
+
 
             } else if (ChallengeSettings.inventorySelected == "Settings.Health") {
 
@@ -264,6 +276,7 @@ public class ChallengeListener implements Listener {
                     p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde gestartet! " + Utils.getRainbowString("Viel Glück!")));
                     p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der aktuelle &bRekord&f liegt bei &b") + Utils.formatTimerTime(ChallengeMain.recordInSeconds));
                     p.setGameMode(GameMode.SURVIVAL);
+                    CoreSendStringPacket.sendPacketToTitle(p, "Challenge", Utils.colorize("wird &agestartet!"));
                     Utils.heal(p);
                     p.getInventory().clear();
                 }
@@ -524,6 +537,7 @@ public class ChallengeListener implements Listener {
             }
         }
     }
+
 
     private static void sendColoredEntityString(String colorCode, Player player, String entity, String damageTaken, String add) {
         if (colorCode == null) {

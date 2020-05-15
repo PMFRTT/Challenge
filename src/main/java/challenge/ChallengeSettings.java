@@ -20,16 +20,6 @@ public class ChallengeSettings {
     public static String inventorySelected;
 
 
-    public static ItemStack healthSettings = new ItemStack(Material.RED_DYE, 1);
-    public static ItemMeta healthSettingsMeta = healthSettings.getItemMeta();
-
-    public static ItemStack ultraHardcore = new ItemStack(Material.GOLDEN_APPLE, 1);
-    public static ItemMeta ultraHardcoreMeta = ultraHardcore.getItemMeta();
-
-    public static ItemStack amountOfLife = new ItemStack(Material.RED_DYE, 10);
-    public static ItemMeta amountOfLifeMeta = amountOfLife.getItemMeta();
-
-
     public static Inventory prepareInventory(Inventory inventory, String inventoryName) {
         inventory = Bukkit.createInventory(null, 54, Utils.colorize("&6" + inventoryName));
 
@@ -47,7 +37,7 @@ public class ChallengeSettings {
         addItem(Material.RED_MUSHROOM, 1, "Split-Herzen", 49, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDie Herzen werden zwischen"));add(Utils.colorize("&fallen Spielern aufgeteilt!"));}}, Settings, ChallengeMain.isSplitHealth);
         addItem(Material.OAK_SIGN, 1, "Schadens-Anzeige", 31, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fJeder Schaden, den ein Spieler"));add(Utils.colorize("&ferhält wird im Chat angezeigt!"));}}, Settings, ChallengeMain.showDamage);
         addItem(Material.PAPER, 1, "Lebens-Anzeige", 53, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDas Leben eines jeden Spielers"));add(Utils.colorize("&fwird in der Spieler-Liste angezeigt!"));}}, Settings, ChallengeMain.showHealthScoreboard);
-
+        addItem(Material.FEATHER, 1, "No-Jump", 28, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fSobald ein Spieler springt,"));add(Utils.colorize("&fbekommt dieser Schaden!"));}}, Settings,  ChallengeMain.noJump);
 
         //Fills up empty slots
         for (int i = 0; i < 54; i++) {

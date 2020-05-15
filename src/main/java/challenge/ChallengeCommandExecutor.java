@@ -1,6 +1,7 @@
 package challenge;
 
 import core.CoreResetServer;
+import core.CoreSendStringPacket;
 import core.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -60,6 +61,7 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde gestartet! " + Utils.getRainbowString("Viel Glück!")));
                     p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der aktuelle &bRekord&f liegt bei &b") + Utils.formatTimerTime(ChallengeMain.recordInSeconds));
                     p.setGameMode(GameMode.SURVIVAL);
+                    CoreSendStringPacket.sendPacketToTitle(p, "Challenge", Utils.colorize("wird &agestartet!"));
                     Utils.heal(p);
                 }
                 return true;
@@ -69,6 +71,7 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     ChallengeMain.paused = true;
                     for (Player p : players) {
                         p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde von &b" + sender.getName() + "&f pausiert!"));
+                        CoreSendStringPacket.sendPacketToTitle(p, "Challenge", Utils.colorize("wurde &cpausiert!"));
                     }
                     return true;
                 } else {
@@ -80,6 +83,7 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     ChallengeMain.paused = false;
                     for (Player p : players) {
                         p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde von &b" + sender.getName() + "&f fortgesetzt!"));
+                        CoreSendStringPacket.sendPacketToTitle(p, "Challenge", Utils.colorize("wurde &afortgesetzt!"));
                     }
                     return true;
                 } else {

@@ -45,6 +45,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
     public static boolean showRecord = false;
     public static boolean showDamage = false;
     public static boolean showHealthScoreboard = false;
+    public static boolean noJump = false;
 
     public static HashMap<Player, Boolean> showParticles = new HashMap<Player, Boolean>();
 
@@ -171,7 +172,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                if (paused || !started)
+                if (paused || !started) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (showParticles.containsKey(player)) {
                             if (showParticles.get(player)) {
@@ -179,6 +180,15 @@ public class ChallengeMain extends JavaPlugin implements Listener {
                             }
                         }
                     }
+                } else {
+                    if (noJump) {
+                        for (Player player : Bukkit.getOnlinePlayers()) {
+                            if (player.getVelocity().getY() >= 0 && !player.isOnGround()) {
+                                player.damage(2.0);
+                            }
+                        }
+                    }
+                }
             }
         }, 0L, 1L);
 
@@ -230,7 +240,6 @@ public class ChallengeMain extends JavaPlugin implements Listener {
         }
 
         System.out.println(temp * 900);
-
         return temp * 900;
     }
 

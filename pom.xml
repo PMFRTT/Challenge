@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.github.PMFRTT</groupId>
             <artifactId>Core</artifactId>
-            <version>-SNAPSHOT</version>
+            <version>master-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
