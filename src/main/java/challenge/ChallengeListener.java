@@ -154,12 +154,12 @@ public class ChallengeListener implements Listener {
                 if (e.getSlot() == 53) {
                     if (!showHealthScoreboard) {
                         showHealthScoreboard = true;
-                        Utils.createHealthDisplay();
+                        Utils.createHealthDisplay(true);
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Lebensanzeige", true);
                     } else {
                         showHealthScoreboard = false;
-                        Utils.createHealthDisplay();
+                        Utils.createHealthDisplay(false);
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Lebensanzeige", false);
                     }
@@ -361,6 +361,7 @@ public class ChallengeListener implements Listener {
 
     @EventHandler
     private void showDamage(EntityDamageEvent e) {
+        damageTaken = e.getDamage() / 2;
         String damageTaken = this.damageTaken + "❤";
         if (e.getEntity() instanceof Player) {
             Player player = (Player) e.getEntity();
@@ -500,7 +501,7 @@ public class ChallengeListener implements Listener {
 
     @EventHandler
     private void splitDamage(EntityDamageEvent e) {
-        damageTaken = e.getDamage();
+        damageTaken = e.getDamage() / 2;
         if (e.getEntity() instanceof Player) {
             if (!paused && started) {
                 if (isSplitHealth) {

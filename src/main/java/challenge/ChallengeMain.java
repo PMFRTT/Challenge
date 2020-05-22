@@ -250,8 +250,8 @@ public class ChallengeMain extends JavaPlugin implements Listener {
         for (Player ps : players) {
             ps.setGameMode(GameMode.SPECTATOR);
             ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&b" + player.getDisplayName() + "&f ist gestorben!"));
-            ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge ist bei &b" + Utils.formatTimerTime(secondsRunning) + "&f gescheitert!"));
             ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize(Utils.getRainbowString("FeelsBadMan")));
+            ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Zeit verschwendet: &6" + Utils.formatTimerTime(secondsRunning)));
         }
     }
 
