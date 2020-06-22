@@ -38,6 +38,7 @@ public class ChallengeSettings {
         addItem(Material.OAK_SIGN, 1, "Schadens-Anzeige", 31, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fJeder Schaden, den ein Spieler"));add(Utils.colorize("&ferhält wird im Chat angezeigt!"));}}, Settings, ChallengeMain.showDamage);
         addItem(Material.PAPER, 1, "Lebens-Anzeige", 53, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fDas Leben eines jeden Spielers"));add(Utils.colorize("&fwird in der Spieler-Liste angezeigt!"));}}, Settings, ChallengeMain.showHealthScoreboard);
         addItem(Material.FEATHER, 1, "No-Jump", 28, new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fSobald ein Spieler springt,"));add(Utils.colorize("&fbekommt dieser Schaden!"));}}, Settings,  ChallengeMain.noJump);
+addItem(Material.BARRIER, 1, "Single-Item", 34,new ArrayList<String>(){{add("");add(Utils.colorize("&7Beschreibung:")); add(Utils.colorize("&fSobald ein Spieler springt,"));add(Utils.colorize("&fbekommt dieser Schaden!"));}}, Settings, ChallengeMain.singleItem);
 
         //Fills up empty slots
         for (int i = 0; i < 54; i++) {

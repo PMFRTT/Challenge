@@ -1,26 +1,23 @@
 package challenge;
 
-import core.CoreResetServer;
-import core.CoreSendStringPacket;
 import core.Utils;
+import core.core.CoreResetServer;
+import core.core.CoreSendStringPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.Collection;
 
 public class ChallengeCommandExecutor implements CommandExecutor {
 
-    private ChallengeMain Challenge;
     public static Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-    public static BukkitScheduler scheduler = Bukkit.getScheduler();
 
-    public ChallengeCommandExecutor(ChallengeMain Challenge) {
-        this.Challenge = Challenge;
+    public ChallengeCommandExecutor() {
+
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,19 +30,19 @@ public class ChallengeCommandExecutor implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("settings")) {
             ChallengeSettings.Settings = ChallengeSettings.prepareInventory(ChallengeSettings.Settings, "Challenge-Settings");
             ChallengeSettings.displaySettingsInv();
+            assert player != null;
             player.openInventory(ChallengeSettings.Settings);
             return true;
         }
 
 
         if (command.getName().equalsIgnoreCase("backpack")) {
+            assert player != null;
             if (ChallengeMain.backpackEnabled) {
                 player.openInventory(ChallengeBackpack.updateBackpack());
                 return true;
             } else {
-                for (Player p : players) {
-                    player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&cDas Backpack ist deaktiviert!"));
-                }
+                player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&cDas Backpack ist deaktiviert!"));
                 return false;
             }
         }
@@ -67,7 +64,7 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                 return true;
             }
             if (args[0].equalsIgnoreCase("pause")) {
-                if (ChallengeMain.paused == false) {
+                if (!ChallengeMain.paused) {
                     ChallengeMain.paused = true;
                     for (Player p : players) {
                         p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde von &b" + sender.getName() + "&f pausiert!"));
@@ -75,11 +72,12 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     }
                     return true;
                 } else {
+                    assert player != null;
                     player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&cDie Challenge ist bereits pausiert!"));
                 }
             }
             if (args[0].equalsIgnoreCase("resume")) {
-                if (ChallengeMain.paused == true) {
+                if (ChallengeMain.paused) {
                     ChallengeMain.paused = false;
                     for (Player p : players) {
                         p.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Die Challenge wurde von &b" + sender.getName() + "&f fortgesetzt!"));
@@ -87,30 +85,33 @@ public class ChallengeCommandExecutor implements CommandExecutor {
                     }
                     return true;
                 } else {
+                    assert player != null;
                     player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&cDie Challenge läuft bereits!"));
                 }
             }
             if (args[0].equalsIgnoreCase("set")) {
                 if (args.length == 2) {
-                    Challenge.secondsRunning = Integer.parseInt(args[1]);
+                    ChallengeMain.secondsRunning = Integer.parseInt(args[1]);
                     return true;
                 }
             }
 
-        }else if(command.getLabel().equalsIgnoreCase("randomtp")){
-            if(args.length == 0){
-            ChallengeRandomTeleport.teleportPlayerRandomly(player);}
-            else if(args[0].equalsIgnoreCase("range")){
+        } else if (command.getLabel().equalsIgnoreCase("randomtp")) {
+            if (args.length == 0) {
+                assert player != null;
+                ChallengeRandomTeleport.teleportPlayerRandomly(player);
+            } else if (args[0].equalsIgnoreCase("range")) {
                 ChallengeRandomTeleport.setRange(Integer.parseInt(args[1]));
             }
-        }
-        else if(command.getLabel().equalsIgnoreCase("record")){
-            if(args.length == 0){
+        } else if (command.getLabel().equalsIgnoreCase("record")) {
+            if (args.length == 0) {
                 ChallengeFileReader.readDataFile();
+                assert player != null;
                 player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der aktuelle &bRekord &fliegt bei &b" + Utils.formatTimerTime(ChallengeMain.recordInSeconds)));
-            }else if(args.length == 2){
-                if(args[0].equalsIgnoreCase("set")){
+            } else if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("set")) {
                     ChallengeMain.recordInSeconds = Integer.parseInt(args[1]);
+                    assert player != null;
                     player.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der neue &bRekord &fwurde auf &b" + Utils.formatTimerTime(Integer.parseInt(args[1])) + "&fgesetzt"));
                     ChallengeFileReader.writeDataFile(Integer.parseInt(args[1]));
                 }

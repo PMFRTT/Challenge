@@ -1,9 +1,7 @@
 package challenge;
 
-import core.CoreSendStringPacket;
+import core.core.CoreSendStringPacket;
 import core.Utils;
-import net.minecraft.server.v1_15_R1.ItemBoneMeal;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
@@ -174,6 +172,20 @@ public class ChallengeListener implements Listener {
                         noJump = false;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Lebensanzeige", false);
+                    }
+                }
+
+                if(e.getSlot() == 34){
+                    if(!singleItem){
+                        singleItem = true;
+                        ChallengeSettings.displaySettingsInv();
+                        settingsChangeMessage("Single-Item", true);
+                        ChallengeSingleItem challengeSingleItem = new ChallengeSingleItem(main);
+                        challengeSingleItem.singleItemChecker();
+                    }else{
+                        singleItem = false;
+                        ChallengeSettings.displaySettingsInv();
+                        settingsChangeMessage("Single-Item", false);
                     }
                 }
 

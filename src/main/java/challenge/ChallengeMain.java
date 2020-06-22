@@ -1,10 +1,7 @@
 package challenge;
 
-import java.util.*;
-
-import core.CoreMain;
-import core.CoreResetServer;
-import core.CoreSendStringPacket;
+import core.core.CoreMain;
+import core.core.CoreSendStringPacket;
 import core.Utils;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
@@ -15,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.*;
 
 public class ChallengeMain extends JavaPlugin implements Listener {
 
@@ -46,6 +45,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
     public static boolean showDamage = false;
     public static boolean showHealthScoreboard = false;
     public static boolean noJump = false;
+    public static boolean singleItem = false;
 
     public static HashMap<Player, Boolean> showParticles = new HashMap<Player, Boolean>();
 
@@ -72,7 +72,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
         ChallengeListener challengeSettingsListener = new ChallengeListener(this);
         recordTimeBar.setVisible(false);
 
-        CommExecutor = new ChallengeCommandExecutor(this);
+        CommExecutor = new ChallengeCommandExecutor();
         getCommand("timer").setExecutor(CommExecutor);
         getCommand("reset").setExecutor(CommExecutor);
         getCommand("settings").setExecutor(CommExecutor);
@@ -176,7 +176,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         if (showParticles.containsKey(player)) {
                             if (showParticles.get(player)) {
-                                player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 100);
+                                player.spawnParticle(Particle.SPELL_WITCH, player.getLocation(), 5);
                             }
                         }
                     }
@@ -252,6 +252,7 @@ public class ChallengeMain extends JavaPlugin implements Listener {
             ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&b" + player.getDisplayName() + "&f ist gestorben!"));
             ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize(Utils.getRainbowString("FeelsBadMan")));
             ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Zeit verschwendet: &6" + Utils.formatTimerTime(secondsRunning)));
+            ps.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("Der Seed war: &6") + world.getSeed());
         }
     }
 
