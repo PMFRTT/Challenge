@@ -41,12 +41,8 @@ public class ChallengeSingleItem {
                                     for (ItemStack itemStack : Arrays.asList(playerInventoryHashMap.get(player).getContents())) {
                                         if (i != null && itemStack != null) {
                                             if (i.getType() == itemStack.getType()) {
-                                                for (Player player1 : Bukkit.getOnlinePlayers()) {
-                                                    player1.sendMessage(Utils.getPrefix("Challenge") + Utils.colorize("&d " + player.getDisplayName() + " &Fhat &c" + i.getType() + "&f aufgesammelt, obwohl &b" + entry.getKey().getDisplayName() + " &fes schon im Inventar hatte!"));
-                                                    ChallengeMain.ChallengeFailed(player1);
-                                                    cancel();
-                                                    break;
-                                                }
+                                                ChallengeMain.ChallengeFailed(player);
+                                                cancel();
                                             }
                                         }
                                     }
@@ -57,7 +53,7 @@ public class ChallengeSingleItem {
 
                 }
             }
-        }.runTaskTimer(main, 0, 1);
+        }.runTaskTimer(main, 0, 5);
 
 
     }

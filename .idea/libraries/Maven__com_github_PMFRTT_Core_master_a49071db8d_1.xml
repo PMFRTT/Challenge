@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.PMFRTT:Core:master-a49071db8d-1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/PMFRTT/Core/master-a49071db8d-1/Core-master-a49071db8d-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/PMFRTT/Core/master-a49071db8d-1/Core-master-a49071db8d-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/PMFRTT/Core/master-a49071db8d-1/Core-master-a49071db8d-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

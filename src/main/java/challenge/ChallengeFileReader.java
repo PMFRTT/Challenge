@@ -2,15 +2,13 @@ package challenge;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChallengeFileReader {
 
     private static ChallengeMain main;
 
     public ChallengeFileReader(ChallengeMain main) {
-        this.main = main;
+        ChallengeFileReader.main = main;
     }
 
 
@@ -36,10 +34,8 @@ public class ChallengeFileReader {
             while ((currentLine = bufferedReader.readLine()) != null) {
 
 
-                if (currentLine.contains("record: ")) ;
                 String recordInSecondsString = currentLine.replace("record: ", "");
-                int recordInSeconds = Integer.parseInt(recordInSecondsString);
-                ChallengeMain.recordInSeconds = recordInSeconds;
+                ChallengeMain.recordInSeconds = Integer.parseInt(recordInSecondsString);
 
             }
             bufferedReader.close();
@@ -69,12 +65,6 @@ public class ChallengeFileReader {
 
 
             PrintWriter printWriter = new PrintWriter(new FileWriter(challengeData));
-
-
-            List<String> previousSave = new ArrayList<String>();
-
-            String currentLine;
-
 
             printWriter.write("record: " + recordInSeconds);
 

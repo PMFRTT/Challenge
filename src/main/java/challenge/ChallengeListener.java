@@ -163,26 +163,26 @@ public class ChallengeListener implements Listener {
                     }
                 }
 
-                if(e.getSlot() == 28){
-                    if(!noJump){
+                if (e.getSlot() == 28) {
+                    if (!noJump) {
                         noJump = true;
                         ChallengeSettings.displaySettingsInv();
-                        settingsChangeMessage("Lebensanzeige", true);
-                    }else{
+                        settingsChangeMessage("No-Jump", true);
+                    } else {
                         noJump = false;
                         ChallengeSettings.displaySettingsInv();
-                        settingsChangeMessage("Lebensanzeige", false);
+                        settingsChangeMessage("No-Jump", false);
                     }
                 }
 
-                if(e.getSlot() == 34){
-                    if(!singleItem){
+                if (e.getSlot() == 34) {
+                    if (!singleItem) {
                         singleItem = true;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Single-Item", true);
                         ChallengeSingleItem challengeSingleItem = new ChallengeSingleItem(main);
                         challengeSingleItem.singleItemChecker();
-                    }else{
+                    } else {
                         singleItem = false;
                         ChallengeSettings.displaySettingsInv();
                         settingsChangeMessage("Single-Item", false);
@@ -515,6 +515,15 @@ public class ChallengeListener implements Listener {
     private void splitDamage(EntityDamageEvent e) {
         damageTaken = e.getDamage() / 2;
         if (e.getEntity() instanceof Player) {
+            Player p = null;
+            if (e.getEntity() instanceof Player) {
+                p = (Player) e.getEntity();
+            }
+            if (p.isBlocking()) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                    damageTaken = 0;
+                }
+            }
             if (!paused && started) {
                 if (isSplitHealth) {
                     splitHealth -= damageTaken;
